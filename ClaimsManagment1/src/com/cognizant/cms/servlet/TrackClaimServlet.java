@@ -2,9 +2,7 @@ package com.cognizant.cms.servlet;
 
 import java.io.IOException;
 import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.util.ArrayList;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -13,20 +11,21 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.cognizant.cms.dao.ClaimDaoSql;
 import com.cognizant.cms.dao.ConnectionHandler;
 import com.cognizant.cms.model.Claim;
 
 /**
- * Servlet implementation class AcceptClaimRequestServlet
+ * Servlet implementation class TrackClaimServlet
  */
-@WebServlet(name = "AcceptClaimRequest", urlPatterns = { "/AcceptClaimRequest" })
-public class AcceptClaimRequestServlet extends HttpServlet {
+@WebServlet(name = "TrackClaim", urlPatterns = { "/TrackClaim" })
+public class TrackClaimServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public AcceptClaimRequestServlet() {
+    public TrackClaimServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -35,22 +34,12 @@ public class AcceptClaimRequestServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		
-		
-		Connection conn=ConnectionHandler.getConnection();
-		String id=request.getParameter("claim_id");
-		
-		try {
-			String query = "update claim set approve_status='accept' where claim_id=?";
-			PreparedStatement ps=conn.prepareStatement(query);
-			ps.setString(1,id);
-			ps.executeUpdate();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		RequestDispatcher rd=request.getRequestDispatcher("/claim-status-notification.jsp");
-		rd.forward(request, response);
+		Connection con = ConnectionHandler.getConnection();
+		 String id=request.getParameter("memid");
+		 ClaimDaoSql claimDaoSql=new ClaimDaoSql();
+			ArrayList<Claim> claimList = claimDaoSql.trackClaims();
+			request.setAttribute("tclaims",claimList);
+			RequestDispatcher rd = request.getRequestDispatcher("");
 		
 	}
 

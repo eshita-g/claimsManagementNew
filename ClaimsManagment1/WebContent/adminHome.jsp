@@ -24,7 +24,7 @@
 <br>
 <a href="#" id="a2">Plan Codes</a>
 <br>
-<a href="#" id="a2">Processed Claims</a>
+<a href="ProcessedClaims" id="a2">Processed Claims</a>
 </header>
 
 </body>

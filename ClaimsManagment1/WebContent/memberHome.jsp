@@ -17,7 +17,7 @@ Hello <c:out value="${x}"></c:out>
 <a href ="/Claim-2-master_ClaimsManagment1/RaiseClaim?memid=${x}">Raise A Claim</a>  
 </section> 
 <section>
-<a href =" ">Track Claim Progress</a>  
+<a href ="/Claim-2-master_ClaimsManagment1/TrackClaim?memid=${x}">Track Claim Progress</a>  
 </section> 
 <section>
 <a href =" ">Previous Claims</a>  

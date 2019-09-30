@@ -18,7 +18,6 @@ import javax.servlet.http.Part;
 import com.cognizant.cms.model.Claim;
 import com.cognizant.cms.model.Member;
 
-
 public class ClaimDaoSql {
 	public void fileUpload(Part filePart) {
 
@@ -74,29 +73,28 @@ public class ClaimDaoSql {
 
 	}
 
-public ArrayList<Claim> getClaimListToBeProcess() {
-	 Connection con = ConnectionHandler.getConnection();
-	ArrayList<Claim> claimList=new ArrayList<Claim>();
-	
-	try {
-		PreparedStatement stmt  = con.prepareStatement("select * from claim where claim_status='open'");
-		
-		ResultSet rs = stmt.executeQuery();
-		while(rs.next())
-		{
-			
-			Claim claim=new Claim(rs.getString("claim_id"),rs.getString("mem_id"));
-			claimList.add(claim);
+	public ArrayList<Claim> getClaimListToBeProcess() {
+		Connection con = ConnectionHandler.getConnection();
+		ArrayList<Claim> claimList = new ArrayList<Claim>();
 
-		}		
+		try {
+			PreparedStatement stmt = con.prepareStatement("select * from claim where approve_status='null'");
 
-	} catch (SQLException e) {
-		// TODO Auto-generated catch block
-		e.printStackTrace();
-	} 
-	return claimList;
-	
-}
+			ResultSet rs = stmt.executeQuery();
+			while (rs.next()) {
+
+				Claim claim = new Claim(rs.getString("claim_id"), rs.getString("mem_id"));
+				claimList.add(claim);
+
+			}
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return claimList;
+
+	}
 
 	public String getImageString(Blob blob) {
 		String base64Image = null;
@@ -121,6 +119,54 @@ public ArrayList<Claim> getClaimListToBeProcess() {
 		}
 
 		return base64Image;
+
+	}
+
+	public ArrayList<Claim> processedClaims() {
+		Connection con = ConnectionHandler.getConnection();
+		ArrayList<Claim> claimList = new ArrayList<Claim>();
+		String query = "select * from claim where approve_status ='accept' or approve_status='reject' ";
+		try {
+			PreparedStatement st = con.prepareStatement(query);
+			ResultSet rs = st.executeQuery();
+			while (rs.next()) {
+				Claim c = new Claim();
+				c.setMemid(rs.getString("mem_id"));
+				c.setClaimid(rs.getString("claim_id"));
+				c.setApprove_status(rs.getString("approve_status"));
+				claimList.add(c);
+
+			}
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return claimList;
+	}
+
+	public ArrayList<Claim> trackClaims() {
+		Connection con = ConnectionHandler.getConnection();
+		ArrayList<Claim> claimList = new ArrayList<Claim>();
+		String query = "select * from claim where claim_status = 'open' ";
+		try {
+			PreparedStatement st = con.prepareStatement(query);
+			ResultSet rs = st.executeQuery();
+			while(rs.next())
+			{
+				Claim c = new Claim();
+				c.setClaimid(rs.getString("claim_id"));
+				c.setMemid(rs.getString("claim_id"));
+				c.setApprove_status(rs.getString("approve_status"));
+				claimList.add(c);
+				
+			}
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return claimList;
 
 	}
 }

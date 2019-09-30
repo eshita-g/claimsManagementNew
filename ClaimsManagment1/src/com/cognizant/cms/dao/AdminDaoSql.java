@@ -96,7 +96,6 @@ public int loginAdmin(String adminid,String password) {
    	 ArrayList<Member> memberList=null;
 	try {
   		Connection con=ConnectionHandler.getConnection();
-  		memberList=new ArrayList<Member>();
   		    int id=1;
   		    String mem_id=memidd;
   		    System.out.println("MemberId "+mem_id );
@@ -114,8 +113,8 @@ public int loginAdmin(String adminid,String password) {
       	 ArrayList<Member> memberList=null;
    	try {
      		Connection con=ConnectionHandler.getConnection();
-     		memberList=new ArrayList<Member>();
-     		    int id=3;
+   
+     		 
      			PreparedStatement stmt=con.prepareStatement("delete from member where mem_id='"+memid+"'");
      			System.out.println("member Status Rejected Succeessfully");
     			stmt.executeUpdate();

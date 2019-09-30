@@ -39,9 +39,10 @@ public class RejectClaimRequestServlet extends HttpServlet {
 		Connection conn=ConnectionHandler.getConnection();
 		String id=request.getParameter("claim_id");
 		try {
-			PreparedStatement ps=conn.prepareStatement("update claim set approve_status="+"'Rejected'"+" where claim_id=?" );
+			String query = "update claim set approve_status='reject' where claim_id=?";
+			PreparedStatement ps=conn.prepareStatement(query);
 			ps.setString(1,id);
-			int rs=ps.executeUpdate();
+			ps.executeUpdate();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

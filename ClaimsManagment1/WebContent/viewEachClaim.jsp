@@ -12,7 +12,7 @@
 </head>
 <body>
 <h2>Details of a Claim <c:out value="${x.getClaimid()}"></c:out></h2>
-<form  enctype="multipart/form-data">
+<form action enctype="multipart/form-data">
 <table>
 <tr> <td> Member Id: </td> <td> <c:out value="${x.getMemid()}"> </c:out> </td></tr>
 <br>
@@ -35,8 +35,8 @@
 <br><br>
 <table>
 <tr>
-<td><input type="submit" name="Accept" value="Accept" onSubmit="AcceptClaimRequest?claim_id=${x.getClaimid()}"/></td>
-<td><input type="submit" name="Reject"value="Reject" onSubmit="RejectClaimRequest?claim_id=${x.getClaimid()}"/></td>
+<td><a href="AcceptClaimRequest?claim_id=${x.getClaimid()}">Accept</a></td>
+<td><a href="RejectClaimRequest?claim_id=${x.getClaimid()}">Reject</a></td>
 </tr>
 </table>
 
