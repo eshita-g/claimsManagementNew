@@ -1,8 +1,6 @@
 package com.cognizant.cms.servlet;
 
 import java.io.IOException;
-import java.sql.Connection;
-import java.util.ArrayList;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -12,20 +10,18 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.cognizant.cms.dao.ClaimDaoSql;
-import com.cognizant.cms.dao.ConnectionHandler;
-import com.cognizant.cms.model.Claim;
 
 /**
- * Servlet implementation class TrackClaimServlet
+ * Servlet implementation class CloseClaimServlet
  */
-@WebServlet(name = "TrackClaim", urlPatterns = { "/TrackClaim" })
-public class TrackClaimServlet extends HttpServlet {
+@WebServlet(name = "CloseClaim", urlPatterns = { "/CloseClaim" })
+public class CloseClaimServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public TrackClaimServlet() {
+    public CloseClaimServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -34,13 +30,12 @@ public class TrackClaimServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		Connection con = ConnectionHandler.getConnection();
-		 String id=request.getParameter("memid");
-		 ClaimDaoSql claimDaoSql=new ClaimDaoSql();
-			ArrayList<Claim> claimList = claimDaoSql.trackClaims(id);
-			request.setAttribute("tclaims",claimList);
-			RequestDispatcher rd = request.getRequestDispatcher("/track_claim.jsp");
-			rd.forward(request, response);
+		// TODO Auto-generated method stub
+		String id = request.getParameter("id");
+		ClaimDaoSql claimdaosql = new ClaimDaoSql();
+		claimdaosql.CloseClaim(id);
+		RequestDispatcher rd = request.getRequestDispatcher("/claim-status-notification.jsp");
+		rd.forward(request, response);
 		
 	}
 

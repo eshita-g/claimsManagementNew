@@ -20,7 +20,7 @@ Hello <c:out value="${x}"></c:out>
 <a href ="/Claim-2-master_ClaimsManagment1/TrackClaim?memid=${x}">Track Claim Progress</a>  
 </section> 
 <section>
-<a href =" ">Previous Claims</a>  
+<a href ="/Claim-2-master_ClaimsManagment1/PreviousClaim?memid=${x}" ">Previous Claims</a>  
 </section> 
 </body>
 </html>

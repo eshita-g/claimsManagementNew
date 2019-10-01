@@ -25,6 +25,8 @@
 <a href="#" id="a2">Plan Codes</a>
 <br>
 <a href="ProcessedClaims" id="a2">Processed Claims</a>
+<br>
+<a href="search_member.jsp" id="a2">Member Details</a>
 </header>
 
 </body>

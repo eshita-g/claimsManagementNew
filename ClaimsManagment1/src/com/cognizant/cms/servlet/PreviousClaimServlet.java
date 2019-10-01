@@ -1,7 +1,6 @@
 package com.cognizant.cms.servlet;
 
 import java.io.IOException;
-import java.sql.Connection;
 import java.util.ArrayList;
 
 import javax.servlet.RequestDispatcher;
@@ -12,20 +11,19 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.cognizant.cms.dao.ClaimDaoSql;
-import com.cognizant.cms.dao.ConnectionHandler;
 import com.cognizant.cms.model.Claim;
 
 /**
- * Servlet implementation class TrackClaimServlet
+ * Servlet implementation class PreviousClaimServlet
  */
-@WebServlet(name = "TrackClaim", urlPatterns = { "/TrackClaim" })
-public class TrackClaimServlet extends HttpServlet {
+@WebServlet(name = "PreviousClaim", urlPatterns = { "/PreviousClaim" })
+public class PreviousClaimServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public TrackClaimServlet() {
+    public PreviousClaimServlet() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -34,14 +32,13 @@ public class TrackClaimServlet extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		Connection con = ConnectionHandler.getConnection();
-		 String id=request.getParameter("memid");
-		 ClaimDaoSql claimDaoSql=new ClaimDaoSql();
-			ArrayList<Claim> claimList = claimDaoSql.trackClaims(id);
-			request.setAttribute("tclaims",claimList);
-			RequestDispatcher rd = request.getRequestDispatcher("/track_claim.jsp");
-			rd.forward(request, response);
-		
+		// TODO Auto-generated method stub
+		String id = request.getParameter("memid");
+		ClaimDaoSql claimdaosql = new ClaimDaoSql();
+		ArrayList<Claim> claimlist = claimdaosql.getPreviousClaim(id);
+		request.setAttribute("prevclaims", claimlist);
+		RequestDispatcher rd = request.getRequestDispatcher("/previous_claims.jsp");
+		rd.forward(request, response);
 	}
 
 	/**

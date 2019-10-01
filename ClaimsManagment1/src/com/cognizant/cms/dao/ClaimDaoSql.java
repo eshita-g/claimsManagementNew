@@ -145,18 +145,20 @@ public class ClaimDaoSql {
 		return claimList;
 	}
 
-	public ArrayList<Claim> trackClaims() {
+	public ArrayList<Claim> trackClaims(String id) {
 		Connection con = ConnectionHandler.getConnection();
+		String id1 = id;
 		ArrayList<Claim> claimList = new ArrayList<Claim>();
-		String query = "select * from claim where claim_status = 'open' ";
+		String query = "select * from claim where mem_id = ? and claim_status = 'open' ";
 		try {
 			PreparedStatement st = con.prepareStatement(query);
+			st.setString(1, id1);
 			ResultSet rs = st.executeQuery();
 			while(rs.next())
 			{
 				Claim c = new Claim();
 				c.setClaimid(rs.getString("claim_id"));
-				c.setMemid(rs.getString("claim_id"));
+				c.setMemid(rs.getString("mem_id"));
 				c.setApprove_status(rs.getString("approve_status"));
 				claimList.add(c);
 				
@@ -168,5 +170,51 @@ public class ClaimDaoSql {
 		}
 		return claimList;
 
+	}
+	public void CloseClaim(String claimid)
+	{
+		Connection con = ConnectionHandler.getConnection();
+		String id = claimid;
+		String query = "update claim set claim_status='close' where claim_id = ?";
+		try 
+		{
+			PreparedStatement st = con.prepareStatement(query);
+			st.setString(1, id);
+			st.executeUpdate();
+			
+		} 
+		catch (SQLException e)
+		{
+		
+			e.printStackTrace();
+		}
+		
+	}
+	public ArrayList<Claim> getPreviousClaim(String memid)
+	{
+		Connection con = ConnectionHandler.getConnection();
+		String id = memid;
+		ArrayList<Claim> claimlist = new ArrayList<Claim>();
+		String query = "select * from claim where mem_id = ? and claim_status = 'close' ";
+		try 
+		{
+			PreparedStatement st = con.prepareStatement(query);
+			st.setString(1, id);
+			ResultSet rs = st.executeQuery();
+			while(rs.next())
+			{
+				Claim c= new Claim();
+				c.setClaimid(rs.getString("claim_id"));
+				c.setApprove_status(rs.getString("approve_status"));
+				claimlist.add(c);
+				
+			}
+		} 
+		catch (SQLException e)
+		{
+		
+			e.printStackTrace();
+		}
+		return claimlist;
 	}
 }
